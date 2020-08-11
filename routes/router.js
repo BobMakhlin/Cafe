@@ -22,17 +22,19 @@ router.get('/drinks', async (req, res) => {
     res.json(drinks);
 });
 router.post('/drinks', async (req, res) => {
-    let drinkData = req.body.json();
+    let drinkData = req.body;
     let drink = new Drink(drinkData);
 
     try {
         await drink.save();
     }
     catch (err) {
-        console.log(err);
-        console.log();
-        console.log();
-        console.log();
+        if (err.name == 'ValidationError') {
+            res.status(409).send(err.message);
+        }
+        else {
+            throw err;
+        }
     }
 });
 router.get('/drinks/:id', async (req, res) => {
