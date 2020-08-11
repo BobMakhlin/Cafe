@@ -3,6 +3,7 @@ const router = require('./routes/router');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const dbConfig = require('./config/dbConfig');
+const cors = require('cors')
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -10,8 +11,8 @@ const PORT = process.env.PORT || 4000;
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cors());
 app.use(router);
-
 
 start();
 async function start() {
