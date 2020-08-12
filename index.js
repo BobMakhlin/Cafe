@@ -8,13 +8,10 @@ const cors = require('cors')
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(cors());
+configureServer();
 app.use(router);
-
 start();
+
 async function start() {
     try {
         let url = `mongodb+srv://${dbConfig.username}:${dbConfig.password}@cluster0.r5oer.mongodb.net/${dbConfig.dbName}`;
@@ -30,4 +27,9 @@ async function start() {
         console.log(err);
     }
 }
-
+function configureServer() {
+    app.use(express.static('public'));
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
+    app.use(cors());
+}
